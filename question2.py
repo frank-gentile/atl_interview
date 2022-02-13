@@ -95,4 +95,6 @@ for k in range(10):
     P = (np.identity(2) - K.dot(H)).dot(P) #update error covariance
     
     estimation.append((x_k[0], x_k[1])) #append the estimations
+
+print('From the Kalman filter the 10 samples are as follows'+str(estimation))
 # %%
