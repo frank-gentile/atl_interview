@@ -1,0 +1,55 @@
+Coding Exercises
+----------------
+Please create a public git repo in github/gitlab/bitbucket for your solutions and share the link. Please also include
+your code, solutions, and any README, solution explanations etc. that you may have within this
+repo.
+
+1) Unsupervised + supervised learning.
+--------------------------------------
+
+Attached is a data file dataClustering.csv which contains a data set of 2500 samples
+with 8 features. 
+i) Perform any clustering of your choice to determine the optimal # of clusters in the data
+ii) Using the result of i) assign clusters labels to each sample, so each sample's label is the
+cluster to which it belongs. Using these labels as the exact labels, you now have a labeled dataset.
+Build a classification model that classifies a sample with its corresponding label. Use multinomial 
+regression as a benchmark model, and any ML model (trees, forests, SVM, NN etc.) as a comparison model.
+Comment on which does better and why.
+
+2) Prediction + filtering
+--------------------------
+
+Attached are 3 files: xvalsSine.csv, cleanSine.csv and noisySine.csv. xvalsSine.csv contains
+1000 x-values in the interval -pi/2 to pi/2. cleanSine.csv is a pure sine(x) function for the
+x values mentioned earlier. noisySine.csv contains sine(x) corrupted by noise. 
+i) Using xvalsSine.csv and cleanSine.csv as a labeled dataset (x,sine(x)) being (value,label) with a
+random train/test split of 0.7/0.3, build an OLS regression model (you may want to use polynomial
+basis of a sufficiently large order). 
+(bonus) If you used the normal equations to solve the OLS problem, can you redo it with stochastic
+gradient descent?
+ii) Now, assume you are given the noisySine.csv as a time series with the values of 
+xvalsSine.csv being the time variable. Filter the noisySine.csv data with any filter of your choice
+and compare against cleanSine.csv to report the error.
+(bonus) Can you code a Kalman filter to predict out 10 samples from the noisySine.csv data?
+
+3) Time series with pi
+-----------------------
+Attached is a function genPiAppxDigits(numdigits,appxAcc) which returns an approximate value of pi
+to numdigits digits of accuracy. appxAcc is an integer that controls the approximation accuracy, with
+a larger number for appxAcc leading to a better approximation.
+i) Fix numdigits and appxAcc to be sufficiently large, say 1000 and 100000 respectively.
+Treat each of the 1000 resulting digits of pi as the value of a time series. Thus x[n]=nth digit
+of pi for n=1,1000. Build a simple time series forecasting model (any model of your choice)
+that predicts the next 50 digits of pi. Report your accuracy. Using your results, can
+you conclude that pi is irrational? If so, how?
+(bonus) Now let's vary appxAcc to be 1000,5000,10000,50000,100000 with fixed numdigits=1000. You thus
+have 5 time series, each corresponding to a value of appxAcc. Can you find the pairwise correlation
+between each of the time series?
+
+#
+def genPiAppxDigits(numdigits,appxAcc):
+	import numpy as np
+	from decimal import getcontext, Decimal
+	getcontext().prec = numdigits
+	mypi = (Decimal(4) * sum(-Decimal(k%4 - 2) / k for k in range(1, 2*appxAcc+1, 2)))
+	return mypi
